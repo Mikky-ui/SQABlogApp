@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="" element={<Home/>}/>
         <Route path="/create" element={<CreatePost/>}/>
-        <Route path="/edit" element={<EditPost/>}/>
-        <Route path="/delete" element={<DeletePost/>}/>
+        <Route path="/edit/:id" element={<EditPost/>}/>
+        <Route path="/delete/:id" element={<DeletePost/>}/>
       </Routes>
     </>
   )
