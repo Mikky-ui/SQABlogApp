@@ -16,6 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+import { Link } from 'react-router';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,10 +60,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const pages = ['Dashboard', 'Your Posts', ' Create a Blog Post'];
+const pages = [
+    { name: 'Dashboard', path: '/' },
+    { name: 'Your Posts', path: '/posts' },
+    { name: 'Create a Blog Post', path: '/create' }
+  ];
+//const pages = ['Dashboard', 'Your Posts', ' Create a Blog Post'];
 const settings = ['Profile', 'Account', 'Logout'];
 
-export default function Header() {
+export default function Header({content}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -134,8 +140,8 @@ export default function Header() {
                 sx={{ display: { xs: 'block', md: 'none' } }}
                 >
                 {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                    <MenuItem key={page.name} onClick={handleCloseNavMenu} component={Link} to={page.path}>
+                        <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
                     </MenuItem>
                 ))}
                 </Menu>
@@ -163,14 +169,17 @@ export default function Header() {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
                 <Button
-                    key={page}
+                    key={page.name}
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
+                    component={Link} 
+                    to={page.path}
                 >
-                    {page}
+                    {page.name}
                 </Button>
                 ))}
             </Box>
+            
             <Search sx={{ mr: 2 }}>
                 <SearchIconWrapper>
                     <SearchIcon />
@@ -212,6 +221,10 @@ export default function Header() {
             </Toolbar>
         </Container>
       </AppBar>
+      <Box component="main" sx={{flexGrow: 1, p: 3}}>
+        <Toolbar />
+            {content}
+      </Box>
     </Box>
   );
 }
